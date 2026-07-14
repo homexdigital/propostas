@@ -660,22 +660,10 @@ function exportPdf(){
   btn.textContent = 'Gerando PDF...';
   btn.disabled = true;
 
-  const source = document.getElementById('docPreview');
+  const el = document.getElementById('docPreview');
   const clientRaw = document.getElementById('clientName').value || 'proposta';
   const safeClient = clientRaw.trim().replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_+|_+$/g,'') || 'proposta';
   const filename = `Proposta_Homex_${safeClient}.pdf`;
-
-  // Captura uma cópia com largura fixa (independente do tamanho da tela de quem gerou),
-  // renderizada fora da área visível, pra garantir um resultado sempre consistente.
-  const clone = source.cloneNode(true);
-  clone.style.width = '794px';
-  clone.style.maxWidth = '794px';
-  clone.style.position = 'fixed';
-  clone.style.top = '0';
-  clone.style.left = '-10000px';
-  clone.style.margin = '0';
-  clone.style.boxShadow = 'none';
-  document.body.appendChild(clone);
 
   const opt = {
     margin: 0,
@@ -686,18 +674,17 @@ function exportPdf(){
       useCORS: true,
       backgroundColor: '#ffffff',
       scrollX: 0,
-      scrollY: 0
+      scrollY: -window.scrollY
     },
     jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
   };
 
   const cleanup = ()=>{
-    document.body.removeChild(clone);
     btn.textContent = original;
     btn.disabled = false;
   };
 
-  html2pdf().set(opt).from(clone).save().then(cleanup).catch((err)=>{
+  html2pdf().set(opt).from(el).save().then(cleanup).catch((err)=>{
     console.error(err);
     cleanup();
     // Se falhar no meio do processo, cai para o caminho nativo do navegador
