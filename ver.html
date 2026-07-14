@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta - Homex Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+  :root{
+  --ink:#14131F;
+--ink-soft:#6B6A78;
+--coral:#FF4D6D;
+  --coral-deep:#E23856;
+  --yellow:#FFC857;
+  --paper:#FFFFFF;
+  --paper-soft:#F5F3F1;
+  --line:#E7E4E1;
+  --font-display:'Space Grotesk', 'Segoe UI', sans-serif;
+--font-body:'Inter', 'Segoe UI', sans-serif;
+--font-mono:'Space Mono', 'Courier New', monospace;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; background:var(--paper-soft); color:var(--ink); font-family:var(--font-body); }
+.page{ max-width:760px; margin:0 auto; padding:28px 16px 60px; }
+.topbar2{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+.topbar2 .brand{ display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-weight:600; font-size:14px; color:var(--ink); }
+.topbar2 .sq{ width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg, var(--coral), var(--yellow)); display:inline-block; }
+.dl-btn{ background:var(--coral); color:#fff; border:none; padding:9px 16px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer; font-family:var(--font-body); }
+.dl-btn:hover{ background:var(--coral-deep); }
+.dl-btn:disabled{ opacity:0.6; cursor:default; }
+.doc{ background:var(--paper); border-radius:16px; overflow:hidden; box-shadow:0 1px 3px rgba(20,19,31,0.08), 0 12px 32px rgba(20,19,31,0.06); }
+.doc-head{ background:var(--ink); color:#fff; padding:40px 52px 32px 52px; position:relative; overflow:hidden; }
+.doc-head-row{ display:flex; justify-content:space-between; align-items:flex-start; position:relative; z-index:1; }
+.brandmark2{ display:flex; align-items:center; gap:12px; }
+.sq2{ width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg, var(--coral), var(--yellow)); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; color:var(--ink); font-size:18px; flex-shrink:0; }
+.doc-head .brand-name{ font-family:var(--font-display); font-size:20px; font-weight:600; margin:0; }
+.doc-head .brand-name small{ display:block; font-size:10.5px; color:#B9B7D6; font-weight:400; letter-spacing:.08em; text-transform:uppercase; margin-top:2px; }
+.doc-head .meta{ text-align:right; font-size:11.5px; color:#B9B7D6; font-family:var(--font-mono); line-height:1.7; }
+.doc-head .proj-title{ font-family:var(--font-display); font-size:30px; font-weight:600; margin:26px 0 0 0; position:relative; z-index:1; max-width:80%; line-height:1.15; }
+.doc-head .proj-sub{ font-size:13px; color:#B9B7D6; margin-top:8px; position:relative; z-index:1; }
+.doc-body{ padding:40px 52px 48px 52px; }
+.doc-section-title{ font-family:var(--font-display); font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:var(--coral-deep); margin:28px 0 12px 0; font-weight:700; }
+.doc-section-title:first-child{ margin-top:0; }
+.client-block{ font-size:14px; line-height:1.6; }
+.client-block .name{ font-weight:700; font-size:17px; font-family:var(--font-display); color:var(--ink); }
+.scope-text{ font-size:14px; line-height:1.75; color:#3A3846; white-space:pre-wrap; }
+table.ledger{ width:100%; border-collapse:collapse; margin-top:6px; font-size:13.5px; }
+table.ledger th{ text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); border-bottom:2px solid var(--ink); padding:8px 10px; font-weight:700; }
+table.ledger th.num, table.ledger td.num{ text-align:right; font-family:var(--font-mono); }
+table.ledger td{ padding:13px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+table.ledger tr:last-child td{ border-bottom:none; }
+table.ledger td.desc strong{ font-family:var(--font-display); font-weight:600; font-size:14.5px; }
+table.ledger td.desc small{ display:block; color:var(--ink-soft); margin-top:3px; font-size:12px; line-height:1.5; }
+.totals-card{ margin-top:14px; background:var(--paper-soft); border-radius:12px; padding:18px 22px; }
+.tape-row{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:12.5px; padding:5px 0; color:var(--ink-soft); }
+.tape-row.total{ color:var(--ink); font-weight:700; font-family:var(--font-display); font-size:24px; border-top:2px solid var(--ink); margin-top:8px; padding-top:14px; align-items:baseline; }
+.tape-row.total .val{ color:var(--coral-deep); }
+.stamp{ display:inline-block; margin-top:14px; background:var(--yellow); color:var(--ink); padding:5px 12px; border-radius:999px; font-family:var(--font-mono); font-weight:700; font-size:10.5px; letter-spacing:.05em; }
+.empty-hint{ color:var(--ink-soft); font-size:13px; font-style:italic; padding:18px 8px; text-align:center; }
+.validity-note{ margin-top:34px; font-size:11px; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:14px; line-height:1.6; }
+.error-box{ background:#fff; border-radius:16px; padding:60px 30px; text-align:center; color:var(--ink-soft); font-size:14px; }
+  @media print{
+  .topbar2{ display:none; }
+.page{ padding:0; max-width:none; }
+.doc{ border-radius:0; box-shadow:none; }
+body{ background:#fff; }
+  }
+  </style>
+  </head>
+  <body>
+  <div class="page">
+  <div class="topbar2">
+  <div class="brand"><span class="sq"></span> Homex Digital</div>
+  <button class="dl-btn" id="dlBtn" onclick="downloadPdf()">Baixar PDF</button>
+  </div>
+  <div id="docHolder"></div>
+  </div>
+  <script>
+  function escapeHtml(s){
+return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+  return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+});
+}
+function fmtBRL(v){
+  return Number(v || 0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+}
+function getState(){
+  var hash = window.location.hash || '';
+var m = hash.match(/d=([^&]+)/);
+if(!m) return null;
+try{ return JSON.parse(decodeURIComponent(m[1])); }
+  catch(e){ return null; }
+}
+function renderDoc(state){
+  var holder = document.getElementById('docHolder');
+var dlBtn = document.getElementById('dlBtn');
+if(!state){
+holder.innerHTML = '<div class="error-box">Link invalido ou incompleto. Peca para reenviarem a proposta.</div>';
+dlBtn.style.display = 'none';
+return;
+}
+var items = Array.isArray(state.items) ? state.items : [];
+var subtotal = items.reduce(function(s,i){ return s + ((Number(i.qty)||0) * (Number(i.price)||0)); }, 0);
+var discountPct = parseFloat(state.discountPct) || 0;
+var taxPct = parseFloat(state.taxPct) || 0;
+var discountVal = subtotal * (discountPct/100);
+var afterDiscount = subtotal - discountVal;
+var taxVal = afterDiscount * (taxPct/100);
+var total = afterDiscount + taxVal;
+var client = state.clientName || '-';
+var dateRaw = state.propDate;
+var date = dateRaw ? new Date(dateRaw+'T00:00:00').toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
+var validDays = state.validDays || '15';
+var title = state.projTitle || 'Proposta de Servico';
+var intro = state.scopeIntro;
+var rowsHtml = '';
+if(items.length === 0){
+rowsHtml = '<tr><td colspan="4" class="empty-hint">Nenhum item adicionado.</td></tr>';
+} else {
+items.forEach(function(it){
+  rowsHtml += '<tr><td class="desc"><strong>' + escapeHtml(it.name) + '</strong>' + (it.desc ? ('<small>' + escapeHtml(it.desc) + '</small>') : '') + '</td>' +
+    '<td class="num">' + it.qty + '</td>' +
+    '<td class="num">' + fmtBRL(it.price) + '</td>' +
+    '<td class="num">' + fmtBRL((Number(it.qty)||0)*(Number(it.price)||0)) + '</td></tr>';
+    });
+}
+var introHtml = intro ? ('<div class="doc-section-title">Contexto</div><div class="scope-text">' + escapeHtml(intro) + '</div>') : '';
+var discountRow = discountPct>0 ? ('<div class="tape-row"><span>Desconto (' + discountPct + '%)</span><span>- ' + fmtBRL(discountVal) + '</span></div>') : '';
+var taxRow = taxPct>0 ? ('<div class="tape-row"><span>Taxa/imposto (' + taxPct + '%)</span><span>+ ' + fmtBRL(taxVal) + '</span></div>') : '';
+var refCode = 'PROP-' + date.split('/').join('');
+var html = '';
+html += '<div class="doc">';
+html += '<div class="doc-head">';
+html += '<div class="doc-head-row">';
+html += '<div class="brandmark2">';
+html += '<div class="sq2">H</div>';
+html += '<p class="brand-name">Homex Digital<small>Marketing &amp; Growth</small></p>';
+html += '</div>';
+html += '<div class="meta">Data: ' + date + '<br>Valida por ' + escapeHtml(validDays) + ' dias<br>Ref: ' + refCode + '</div>';
+html += '</div>';
+html += '<p class="proj-title">' + escapeHtml(title) + '</p>';
+html += '<p class="proj-sub">Proposta preparada para ' + escapeHtml(client) + '</p>';
+html += '</div>';
+html += '<div class="doc-body">';
+html += '<div class="doc-section-title">Cliente</div>';
+html += '<div class="client-block"><div class="name">' + escapeHtml(client) + '</div></div>';
+html += introHtml;
+html += '<div class="doc-section-title">Escopo e investimento</div>';
+html += '<table class="ledger"><thead><tr><th>Item</th><th class="num">Qtd</th><th class="num">Valor unit.</th><th class="num">Subtotal</th></tr></thead><tbody>' + rowsHtml + '</tbody></table>';
+html += '<div class="totals-card">';
+html += '<div class="tape-row"><span>Subtotal</span><span>' + fmtBRL(subtotal) + '</span></div>';
+html += discountRow;
+html += taxRow;
+html += '<div class="tape-row total"><span>Total</span><span class="val">' + fmtBRL(total) + '</span></div>';
+html += '</div>';
+html += '<div class="stamp">VALIDA POR ' + escapeHtml(validDays) + ' DIAS</div>';
+html += '<div class="validity-note">Esta proposta e uma estimativa de escopo e valores com base nas informacoes compartilhadas ate a presente data. Ajustes de escopo podem impactar o valor final.</div>';
+html += '</div>';
+html += '</div>';
+holder.innerHTML = html;
+}
+function downloadPdf(){
+  var el = document.querySelector('.doc');
+if(!el) return;
+var btn = document.getElementById('dlBtn');
+var original = btn.textContent;
+btn.textContent = 'Gerando PDF...';
+btn.disabled = true;
+var pageWidthPt = 595.28;
+var ratio = el.offsetHeight / el.offsetWidth;
+var pageHeightPt = Math.max(pageWidthPt * ratio, 200);
+var opt = {
+margin: 0,
+filename: 'Proposta_Homex.pdf',
+  image: { type: 'jpeg', quality: 0.98 },
+  html2canvas: { scale: 2, useCORS: true, width: el.offsetWidth, windowWidth: el.offsetWidth, backgroundColor: '#ffffff' },
+jsPDF: { unit: 'pt', format: [pageWidthPt, pageHeightPt], orientation: 'portrait' }
+         };
+var cleanup = function(){ btn.textContent = original; btn.disabled = false; };
+html2pdf().set(opt).from(el).save().then(cleanup).catch(function(err){
+  console.error(err);
+cleanup();
+window.print();
+});
+}
+renderDoc(getState());
+</script>
+  </body>
+  </html>
