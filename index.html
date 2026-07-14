@@ -660,36 +660,45 @@ function exportPdf(){
   btn.textContent = 'Gerando PDF...';
   btn.disabled = true;
 
-  const el = document.getElementById('docPreview');
-  const clientRaw = document.getElementById('clientName').value || 'proposta';
-  const safeClient = clientRaw.trim().replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_+|_+$/g,'') || 'proposta';
-  const filename = `Proposta_Homex_${safeClient}.pdf`;
-
-  const opt = {
-    margin: 0,
-    filename: filename,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      scrollX: 0,
-      scrollY: -window.scrollY
-    },
-    jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
-  };
-
-  const cleanup = ()=>{
-    btn.textContent = original;
-    btn.disabled = false;
-  };
-
-  html2pdf().set(opt).from(el).save().then(cleanup).catch((err)=>{
-    console.error(err);
-    cleanup();
-    // Se falhar no meio do processo, cai para o caminho nativo do navegador
-    window.print();
+  // Garante que a página está no topo antes de capturar, e espera o navegador
+  // realmente aplicar a rolagem (2 frames) antes de tirar a "foto".
+  window.scrollTo(0, 0);
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      runExport();
+    });
   });
+
+  function runExport(){
+    const el = document.getElementById('docPreview');
+    const clientRaw = document.getElementById('clientName').value || 'proposta';
+    const safeClient = clientRaw.trim().replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_+|_+$/g,'') || 'proposta';
+    const filename = `Proposta_Homex_${safeClient}.pdf`;
+
+    const opt = {
+      margin: 0,
+      filename: filename,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff'
+      },
+      jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    };
+
+    const cleanup = ()=>{
+      btn.textContent = original;
+      btn.disabled = false;
+    };
+
+    html2pdf().set(opt).from(el).save().then(cleanup).catch((err)=>{
+      console.error(err);
+      cleanup();
+      // Se falhar no meio do processo, cai para o caminho nativo do navegador
+      window.print();
+    });
+  }
 }
 
 function escapeHtml(s){
