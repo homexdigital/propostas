@@ -676,9 +676,7 @@ function exportPdf(){
       useCORS: true,
       backgroundColor: '#ffffff',
       scrollX: 0,
-      scrollY: -window.scrollY,
-      windowWidth: el.scrollWidth,
-      windowHeight: el.scrollHeight
+      scrollY: -window.scrollY
     },
     jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
   };
