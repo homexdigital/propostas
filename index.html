@@ -687,6 +687,8 @@ function exportPdf(){
       html2canvas: {
         scale: 2,
         useCORS: true,
+        width: el.offsetWidth,
+        windowWidth: el.offsetWidth,
         backgroundColor: '#ffffff'
       },
       jsPDF: { unit: 'pt', format: [pageWidthPt, pageHeightPt], orientation: 'portrait' }
