@@ -74,7 +74,7 @@ body{ background:#fff; }
   <div class="page">
   <div class="topbar2">
   <div class="brand"><span class="sq"></span> Homex Digital</div>
-  <button class="dl-btn" id="dlBtn" onclick="downloadPdf()">Baixar PDF</button>
+  <button class="dl-btn" id="dlBtn" onclick="downloadPdf()">Baixar PDF</button><button class="dl-btn" id="dlHtmlBtn" onclick="downloadHtml()">Baixar HTML</button>
   </div>
   <div id="docHolder"></div>
   </div>
@@ -186,7 +186,7 @@ cleanup();
 window.print();
 });
 }
-renderDoc(getState());
+function downloadHtml(){ var el = document.querySelector('.doc'); if(!el) return; var styleEl = document.querySelector('style'); var styleTag = styleEl ? styleEl.outerHTML : ''; var filename = 'Proposta_Homex.html'; var fullHtml = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Proposta - Homex Digital</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">' + styleTag + '<style>body{ margin:0; padding:32px 16px; background:var(--paper-soft,#F5F3F1); } .doc-wrap{ max-width:820px; margin:0 auto; }</style></head><body><div class="doc-wrap"><div class="doc">' + el.innerHTML + '</div></div></body></html>'; var blob = new Blob([fullHtml], {type: 'text/html'}); var urlObj = URL.createObjectURL(blob); var a = document.createElement('a'); a.href = urlObj; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(urlObj); }, 3000); } renderDoc(getState());
 </script>
   </body>
   </html>
