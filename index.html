@@ -280,6 +280,8 @@
 
     <button class="save-btn" id="saveBtn" onclick="saveCurrentProposal()">Salvar na biblioteca</button>
     <button class="print-btn" id="exportBtn" onclick="exportPdf()">Baixar PDF</button>
+    <button class="print-btn" id="copyLinkBtn" onclick="copyShareLink()">🔗 Copiar link da proposta</button>
+    <button class="print-btn" id="waBtn" onclick="shareWhatsapp()">📲 Enviar no WhatsApp</button>
   </div>
 
   <div class="doc-wrap">
@@ -710,6 +712,33 @@ function exportPdf(){
 
 function escapeHtml(s){
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  function buildShareUrl(){
+    const state = collectState();
+    const encoded = encodeURIComponent(JSON.stringify(state));
+    const url = new URL('ver.html', window.location.href);
+    url.hash = 'd=' + encoded;
+    return url.href;
+  }
+
+  function copyShareLink(){
+    const url = buildShareUrl();
+    const btn = document.getElementById('copyLinkBtn');
+    const original = btn.textContent;
+    navigator.clipboard.writeText(url).then(()=>{
+      btn.textContent = 'Link copiado!';
+      setTimeout(()=>{ btn.textContent = original; }, 2000);
+    }).catch(()=>{
+      prompt('Copie o link abaixo:', url);
+    });
+  }
+
+  function shareWhatsapp(){
+    const url = buildShareUrl();
+    const client = document.getElementById('clientName').value || '';
+    const msg = 'Ola' + (client ? ' ' + client : '') + '! Segue a proposta: ' + url;
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  }
 }
 
 ['clientName','propDate','validDays','projTitle','scopeIntro'].forEach(id=>{
