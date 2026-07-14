@@ -675,6 +675,11 @@ function exportPdf(){
     const safeClient = clientRaw.trim().replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_+|_+$/g,'') || 'proposta';
     const filename = `Proposta_Homex_${safeClient}.pdf`;
 
+    // Ajusta a altura da página ao tamanho real do conteúdo (evita sobra de espaço em branco).
+    const pageWidthPt = 595.28; // largura A4 em pt
+    const ratio = el.offsetHeight / el.offsetWidth;
+    const pageHeightPt = Math.max(pageWidthPt * ratio, 200);
+
     const opt = {
       margin: 0,
       filename: filename,
@@ -684,7 +689,7 @@ function exportPdf(){
         useCORS: true,
         backgroundColor: '#ffffff'
       },
-      jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+      jsPDF: { unit: 'pt', format: [pageWidthPt, pageHeightPt], orientation: 'portrait' }
     };
 
     const cleanup = ()=>{
