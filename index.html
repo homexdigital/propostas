@@ -712,6 +712,7 @@ function exportPdf(){
 
 function escapeHtml(s){
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 
   function buildShareUrl(){
     const state = collectState();
@@ -739,7 +740,6 @@ function escapeHtml(s){
     const msg = 'Ola' + (client ? ' ' + client : '') + '! Segue a proposta: ' + url;
     window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
   }
-}
 
 ['clientName','propDate','validDays','projTitle','scopeIntro'].forEach(id=>{
   document.getElementById(id).addEventListener('input', render);
