@@ -656,6 +656,8 @@ function exportPdf(){
     return;
   }
 
+  window.scrollTo(0, 0);
+
   const original = btn.textContent;
   btn.textContent = 'Gerando PDF...';
   btn.disabled = true;
@@ -669,7 +671,15 @@ function exportPdf(){
     margin: 0,
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      scrollX: 0,
+      scrollY: -window.scrollY,
+      windowWidth: el.scrollWidth,
+      windowHeight: el.scrollHeight
+    },
     jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
   };
 
